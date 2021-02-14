@@ -1,10 +1,10 @@
 <template>
-  <div :class="message.isUser ? 'user-message' : ''">
-    <p>
-      <span v-text="message.sender" />:&nbsp;&nbsp;<span
-        v-text="message.content"
-      />
-    </p>
+  <div :class="`${message.isUser ? 'user-message' : ''} message`">
+    <div>
+      <p>
+        <span v-text="message.content" />
+      </p>
+    </div>
   </div>
 </template>
 
@@ -23,19 +23,36 @@ export default defineComponent({
 </script>
 
 <style lang='scss' scoped>
-div {
-  display: inline-block;
-  padding: 0 1rem;
-  margin: 0.5rem 0;
-  border-radius: 0.2rem;
-  background: #ddd;
+.message {
+  display: flex;
+  width: 100%;
+  align-items: space-between;
 
   &.user-message {
-    background-color: #eee;
+    margin-left: auto;
+
+    > div {
+      background-color: #eee;
+      margin-left: 0;
+    }
   }
 
-  p > {
-    margin: 0;
+  &.bot-message {
+    margin-left: auto;
+  }
+
+  > div {
+    display: inline-block;
+    padding: 0 1rem;
+    margin: 0.75rem 0;
+    border-radius: 0.2rem;
+    background: #ddd;
+    margin-left: auto;
+    max-width: 85%;
+
+    p > {
+      margin: 0;
+    }
   }
 }
 </style>

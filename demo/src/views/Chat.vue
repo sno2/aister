@@ -24,6 +24,8 @@ import MessageCard from "../comps/MessageCard.vue";
 export default defineComponent({
   components: { MessageCard },
   setup() {
+    const socket = new WebSocket(`ws://${process.env.VUE_APP_SERVER_IP}:4000/chat`);
+
     enum Sender {
       User = "You",
       Bot = "Bot",
@@ -44,22 +46,28 @@ export default defineComponent({
       },
     ]);
 
-    async function addMessageSubmit(e: any) {
+    socket.onmessage = (e) => {
+      messages.push({
+        sender: Sender.Bot,
+        content: e.data,
+        isUser: false,
+      });
+    };
+
+    function addMessageSubmit(e: any) {
       const $message: HTMLInputElement = e.target[0];
       messages.push({
         sender: Sender.User,
         content: $message.value,
         isUser: true,
       });
+      socket.send($message.value);
       $message.value = "";
-      const res = await "I'm good, how are you?";
-      setTimeout(() => {
-        messages.push({
-          sender: Sender.Bot,
-          content: res,
-          isUser: false,
-        });
-      }, 500);
+      // messages.push({
+      //   sender: Sender.Bot,
+      //   content: res,
+      //   isUser: false,
+      // });
     }
 
     return { messages, addMessageSubmit };
@@ -86,8 +94,10 @@ main#chat-page {
   > ol {
     padding: 0;
     list-style: none;
-    max-height: 50vh;
-    overflow-y: auto;
+    height: 50vh;
+    overflow-y: scroll;
+    max-width: 45rem;
+    padding-right: 1.5rem;
   }
 
   > form {
