@@ -1,5 +1,5 @@
 use actix_web::middleware::{normalize::TrailingSlash, NormalizePath};
-use actix_web::{web, App, HttpServer, Responder, HttpRequest};
+use actix_web::{web, App, HttpRequest, HttpServer, Responder};
 
 mod chat;
 mod translate;
@@ -17,7 +17,7 @@ async fn main() -> std::io::Result<()> {
       .route("/chat", web::get().to(chat::index))
       .route("/translate", web::get().to(translate::index))
   })
-  .bind(("127.0.0.1", 4000))?
+  .bind(("0.0.0.0", 4000))?
   .run()
   .await
 }

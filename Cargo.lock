@@ -384,7 +384,11 @@ dependencies = [
  "bytes 0.5.6",
  "futures",
  "indexmap",
+ "lazy_static",
  "rust-bert",
+ "serde",
+ "serde_json",
+ "tch",
 ]
 
 [[package]]

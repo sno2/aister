@@ -18,13 +18,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, onUnmounted } from "vue";
 import MessageCard from "../comps/MessageCard.vue";
 
 export default defineComponent({
   components: { MessageCard },
   setup() {
-    const socket = new WebSocket(`ws://${process.env.VUE_APP_SERVER_IP}:4000/chat`);
+    const socket = new WebSocket(
+      `ws://${process.env.VUE_APP_SERVER_IP}:${process.env.VUE_APP_SERVER_PORT}/chat`
+    );
+
+    socket.onerror = () => {};
 
     enum Sender {
       User = "You",
@@ -53,6 +57,10 @@ export default defineComponent({
         isUser: false,
       });
     };
+
+    onUnmounted(() => {
+      socket.close(1000);
+    });
 
     function addMessageSubmit(e: any) {
       const $message: HTMLInputElement = e.target[0];
@@ -102,7 +110,13 @@ main#chat-page {
 
   > form {
     > input {
+      padding: 0.2rem 0.4rem;
       font-family: inherit;
+      font-size: 1.2rem;
+
+      &:first-of-type {
+        margin-right: 1rem;
+      }
     }
   }
 }

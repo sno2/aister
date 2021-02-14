@@ -15,7 +15,10 @@ actix-files = "0.3"
 futures = "0.3.1"
 bytes = "0.5.3"
 rust-bert = "0.13.0"
-
+serde = "1.0.123"
+serde_json = "1.0.62"
+tch = "~0.3.1"
+lazy_static = "1.4.0"
 
 # Fixes `h2` compilation error from outdated code.
 indexmap = { version = "1.5.2", features = ["std"] }

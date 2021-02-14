@@ -4,7 +4,6 @@
     <nav>
       <RouterLink to="/chat">Chat</RouterLink>
       <RouterLink to="/translate">Translation</RouterLink>
-      <RouterLink to="/translate">Entity Determination</RouterLink>
     </nav>
     <a href="https://github.com/sno2/aister" target="_blank">View Code</a>
   </header>
